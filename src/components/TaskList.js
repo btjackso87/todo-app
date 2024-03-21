@@ -34,7 +34,7 @@ export default function TaskList() {
       }
     }, [])
 
-    console.log(tasks)
+    console.log(tasks);
   
 
 
