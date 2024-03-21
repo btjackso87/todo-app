@@ -1,0 +1,12 @@
+.list{
+    box-shadow: 50px -16px teal;
+    border: solid;
+    margin: 30px;
+    
+}
+
+.title{
+    border-bottom: solid;
+    margin-bottom: 30px;
+}
+

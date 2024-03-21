@@ -1,0 +1,41 @@
+{
+    "todos":[
+        {
+        "title": "go to gym",
+        "finished": true, 
+        "id":1
+        },
+
+        {
+        "title": "cook dinner",
+        "finished": true, 
+        "id":2
+        },
+
+        {
+        "title": "cook dinner",
+        "finished": false, 
+        "id":3
+        }
+    ],
+
+    "teams":[
+        {
+        "sport": "footbal",
+        "team":"bucs", 
+        "id":1
+        },
+
+        {
+        "sport": "basketball", 
+        "team": "celtics", 
+        "id":2
+        },
+
+        {
+        "sport": "soccer",
+        "team": "manchester united",
+        "id":3
+        }
+    ]
+}
