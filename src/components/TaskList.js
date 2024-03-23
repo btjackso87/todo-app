@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 
 //styles
 import "./TaskList.css";
@@ -10,24 +10,30 @@ export default function TaskList() {
   const [tasks, setTask] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [someState, setSomeState] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    const res = await fetch(url);
+    //console.log(res)
+    const json = await res.json();
+    setTask(json);
+    console.log(tasks);
+  }, [url]);
 
   useEffect(() => {
     try {
-      const fetchData = async (uri) => {
-        const res = await fetch(uri);
-        //console.log(res)
-        const json = await res.json();
-        setTask(json);
-      };
-
-      fetchData(url);
+      fetchData();
     } catch (err) {
       setError(err);
       console.log(error);
     }
-  }, [tasks]);
+  }, [fetchData]);
 
   console.log(tasks);
+
+  const handleChange = (e) => {
+    console.log(e.target.getAttribute("id"));
+  };
 
   //test
 
@@ -45,14 +51,18 @@ export default function TaskList() {
                 </div>
               ) : (
                 <div>
-                  {task.id} - {task.title}
-                  <input type="checkbox"></input>
+                  <span className="task-id">{task.id}</span> - {task.title}
+                  <input
+                    id={task.id}
+                    type="checkbox"
+                    onChange={handleChange}
+                  ></input>
                 </div>
               )}
             </h2>
           </div>
         ))}
-      <AddForm />
+      <AddForm fetch={fetchData} />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./AddForm.css";
 import { useFetchPost } from "../hooks/useFetchPost";
 
-export default function AddForm() {
+export default function AddForm({ fetch: fetchData }) {
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -15,7 +15,8 @@ export default function AddForm() {
       title: title,
       finished: false,
     });
-    console.log(title, date);
+    fetchData();
+    console.log("after fetch");
   };
 
   return (
