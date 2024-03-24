@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddForm.css";
 import { useFetchPost } from "../hooks/useFetchPost";
+import { useHistory } from "react-router-dom";
 
-export default function AddForm({ fetch: fetchData }) {
+export default function AddForm() {
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+  const [someState, setSomeState] = useState(null);
 
-  const { postData } = useFetchPost("http://localhost:3000/todos");
+  const { postData, data } = useFetchPost(
+    "http://localhost:3000/todos",
+    "POST"
+  );
 
   const addTaskHandler = (e) => {
     e.preventDefault();
@@ -15,9 +20,14 @@ export default function AddForm({ fetch: fetchData }) {
       title: title,
       finished: false,
     });
-    fetchData();
-    console.log("after fetch");
+    console.log(title, date);
   };
+
+  useEffect(() => {
+    if (data) {
+      window.location.reload();
+    }
+  }, [data]);
 
   return (
     <div>

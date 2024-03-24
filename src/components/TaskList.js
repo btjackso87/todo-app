@@ -3,35 +3,22 @@ import React, { useCallback, useEffect, useReducer, useState } from "react";
 //styles
 import "./TaskList.css";
 import AddForm from "./AddForm";
+import { useFetchPost } from "../hooks/useFetchPost";
 
 export default function TaskList() {
   //state /json endpoint route
   const [url, setUrl] = useState("http://localhost:3000/todos");
-  const [tasks, setTask] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [someState, setSomeState] = useState(false);
 
-  const fetchData = useCallback(async () => {
-    const res = await fetch(url);
-    //console.log(res)
-    const json = await res.json();
-    setTask(json);
-    console.log(tasks);
-  }, [url]);
-
-  useEffect(() => {
-    try {
-      fetchData();
-    } catch (err) {
-      setError(err);
-      console.log(error);
-    }
-  }, [fetchData]);
+  const { data: tasks } = useFetchPost(url);
 
   console.log(tasks);
 
   const handleChange = (e) => {
+    const id = e.target.getAttribute("id");
+    //setUrl("http://localhost:3000/todos/" + id);
     console.log(e.target.getAttribute("id"));
   };
 
@@ -62,7 +49,7 @@ export default function TaskList() {
             </h2>
           </div>
         ))}
-      <AddForm fetch={fetchData} />
+      <AddForm />
     </div>
   );
 }

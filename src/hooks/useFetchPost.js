@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react";
 
-export const useFetchPost = (url) => {
+export const useFetchPost = (url, method = "GET") => {
   const [options, setOptions] = useState(null);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
-  const postData = (data) => {
+  const postData = (tdata) => {
     setOptions({
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(tdata),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+  };
+
+  const patchData = (tdata) => {
+    setOptions({
+      method: "PATCH",
+      body: JSON.stringify(tdata),
       headers: {
         "content-type": "application/json",
       },
@@ -14,16 +26,28 @@ export const useFetchPost = (url) => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch(url, options);
-      const json = await res.json();
-      console.log(res);
+    const fetchData = async (fOptions) => {
+      try {
+        const res = await fetch(url, fOptions);
+        const json = await res.json();
+        setData(json);
+        console.log(res);
+      } catch (err) {
+        setError(err);
+        console.log(error);
+      }
     };
-    if (options) {
-      console.log("true");
-      fetchData();
-    }
-  }, [options]);
 
-  return { postData };
+    if (method === "GET") {
+      fetchData();
+      console.log("test GET");
+    }
+
+    if (method === "POST" && options) {
+      console.log("true POSt");
+      fetchData(options);
+    }
+  }, [url, method, options]);
+
+  return { data, postData };
 };
