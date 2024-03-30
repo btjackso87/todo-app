@@ -18,7 +18,7 @@ export default function TaskList() {
 
   const handleChange = (e) => {
     const id = e.target.getAttribute("id");
-    //setUrl("http://localhost:3000/todos/" + id);
+    setUrl("http://localhost:3000/todos/" + id);
     console.log(e.target.getAttribute("id"));
   };
 
